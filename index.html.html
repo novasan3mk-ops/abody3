@@ -397,3 +397,402 @@
   </script>
 </body>
 </html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta id="saleemViewport" name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سليم | Saleem Patch</title>
+  <!-- v6: robust Arabic/English switcher + persistent language + chooser language control -->
+  <meta name="description" content="سليم: مفهوم مبتكر لنظام لاصق متكامل لإدارة السكري من النوع الأول عبر قياس مستمر للسكر والكيتونات وضخ إنسولين آلي وتنبيهات فورية." />
+  <style>
+    :root{
+      --bg:#f7fbff; --surface:#ffffff; --surface2:#eef8ff; --ink:#0b1d2a; --muted:#64778a;
+      --blue:#2563eb; --blue2:#0ea5e9; --mint:#20c997; --mint2:#8cebd1; --danger:#ef4444;
+      --line:#dbe7f0; --shadow:0 24px 70px rgba(22,72,110,.13); --radius:28px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,"Segoe UI",Tahoma,Arial,sans-serif;background:linear-gradient(180deg,#f8fcff 0%,#f3fbf8 45%,#fff 100%);color:var(--ink);overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+      radial-gradient(circle at 8% 10%,rgba(14,165,233,.10),transparent 28%),
+      radial-gradient(circle at 90% 25%,rgba(32,201,151,.10),transparent 30%)}
+    .container{width:min(1180px,92%);margin:auto}.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(248,252,255,.78);border-bottom:1px solid rgba(219,231,240,.75)}
+    .navin{display:flex;align-items:center;justify-content:space-between;min-height:74px;gap:20px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--mint));display:grid;place-items:center;color:white;box-shadow:0 10px 30px rgba(37,99,235,.25)}
+    .links{display:flex;gap:22px;align-items:center}.links a{text-decoration:none;color:var(--ink);font-size:14px;font-weight:700}.actions{display:flex;gap:10px}.btn{border:0;border-radius:14px;padding:13px 19px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.25s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(135deg,var(--blue),#3b82f6);color:#fff;box-shadow:0 12px 30px rgba(37,99,235,.24)}.secondary{background:white;color:var(--ink);border:1px solid var(--line)}.lang{padding:10px 13px;background:#eaf6ff;color:#155e75;border:1px solid #ccecff}
+    section{padding:88px 0}.hero{padding-top:80px}.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:64px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 13px;border-radius:999px;background:#eafbf5;color:#0f766e;font-size:13px;font-weight:900;border:1px solid #c8f3e4}.dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 7px rgba(32,201,151,.12)}h1{font-size:clamp(42px,5.5vw,76px);line-height:1.04;margin:18px 0 20px;letter-spacing:-2px}.grad{background:linear-gradient(90deg,var(--blue),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:20px;line-height:1.9;color:var(--muted);max-width:680px}.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:32px;color:#486274;font-size:13px;font-weight:800}.trust span::before{content:"✓";color:var(--mint);margin-inline-end:7px}
+    .visual{position:relative;min-height:520px}.orb{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,rgba(187,235,255,.65) 40%,rgba(32,201,151,.22) 70%,transparent 71%);top:40px;left:10%;filter:drop-shadow(0 30px 80px rgba(14,165,233,.15))}.patch{position:absolute;z-index:3;width:265px;height:155px;right:4%;top:95px;background:linear-gradient(145deg,#ffffff,#eff7fa);border-radius:90px;box-shadow:0 34px 70px rgba(30,80,120,.24),inset -12px -12px 26px rgba(120,170,200,.11),inset 8px 8px 20px #fff;border:1px solid rgba(255,255,255,.9);transform:rotate(-12deg)}.patch:before{content:"سليم";position:absolute;inset:0;display:grid;place-items:center;font-weight:1000;font-size:29px;color:#175a75;letter-spacing:.5px}.patch:after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:var(--mint);right:32px;top:30px;box-shadow:0 0 0 7px rgba(32,201,151,.12)}
+    .phone{position:absolute;z-index:4;width:240px;height:465px;left:4%;top:12px;border-radius:42px;background:#081827;padding:10px;box-shadow:0 38px 80px rgba(8,24,39,.28);transform:rotate(5deg)}.screen{height:100%;border-radius:34px;background:linear-gradient(180deg,#f9fdff,#effbf7);padding:22px 16px;color:#102a3b;overflow:hidden}.notch{width:74px;height:18px;border-radius:10px;background:#081827;margin:-14px auto 18px}.apphead{display:flex;justify-content:space-between;font-weight:900}.metric{margin-top:18px;padding:16px;border-radius:20px;background:white;border:1px solid #e2edf3;box-shadow:0 10px 26px rgba(33,85,120,.07)}.metric b{font-size:31px;display:block}.metric small{color:var(--muted)}.good{color:#0f9f75}.warn{color:#d97706}.mini-chart{height:75px;margin-top:12px;border-radius:12px;background:linear-gradient(180deg,rgba(37,99,235,.08),transparent),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 70'%3E%3Cpath d='M0 48 C20 35 35 58 55 35 S90 18 105 32 S140 57 160 31 S185 25 200 18' fill='none' stroke='%232563eb' stroke-width='4'/%3E%3C/svg%3E") center/cover no-repeat}.alertcard{margin-top:14px;border-radius:18px;background:#fff4f4;border:1px solid #ffd2d2;padding:13px;font-size:12px}.floatcard{position:absolute;z-index:6;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.85);box-shadow:var(--shadow);padding:14px 18px;border-radius:18px;font-weight:900;font-size:13px}.fc1{right:1%;bottom:90px}.fc2{left:0;bottom:8px}.fc1 strong{color:var(--mint)}.fc2 strong{color:var(--blue)}
+    .section-head{text-align:center;max-width:790px;margin:0 auto 46px}.section-head h2{font-size:clamp(32px,4vw,52px);margin:10px 0 13px;letter-spacing:-1px}.section-head p{color:var(--muted);line-height:1.8;font-size:17px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:0 16px 50px rgba(31,86,120,.07);transition:.3s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.icon{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#eaf4ff,#e7fff6);margin-bottom:20px}.card h3{margin:0 0 10px;font-size:21px}.card p{margin:0;color:var(--muted);line-height:1.8}.problem{background:linear-gradient(135deg,#0d2538,#0a3940);color:white}.problem .section-head p{color:#c6dde7}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}.stat{padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:22px;background:rgba(255,255,255,.06)}.stat b{display:block;font-size:28px;margin-bottom:7px}.stat span{color:#c3dbe5;font-size:13px}.note{margin-top:18px;font-size:12px;color:#9dbac6;text-align:center}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;counter-reset:step}.step{position:relative;background:white;border:1px solid var(--line);border-radius:26px;padding:30px}.step:before{counter-increment:step;content:counter(step);position:absolute;top:-17px;right:22px;width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--mint));color:white;display:grid;place-items:center;font-weight:1000;box-shadow:0 10px 24px rgba(37,99,235,.2)}.step h3{margin-top:10px}.step p{color:var(--muted);line-height:1.8}
+    .spec-wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:50px;align-items:center}.exploded{position:relative;height:480px}.layer{position:absolute;left:50%;transform:translateX(-50%);width:310px;height:120px;border-radius:70px;border:1px solid rgba(20,80,110,.12);box-shadow:0 18px 30px rgba(20,70,100,.11);display:flex;align-items:center;justify-content:center;font-weight:900;transition:.3s}.layer:hover{transform:translateX(-50%) scale(1.03)}.l1{top:15px;background:#fff;z-index:5}.l2{top:95px;background:#e8f8ff;z-index:4;width:290px}.l3{top:175px;background:#eafff6;z-index:3;width:270px}.l4{top:255px;background:#f2f7fb;z-index:2;width:250px}.l5{top:335px;background:#dff6ef;z-index:1;width:230px}.spec-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}.spec{background:white;border:1px solid var(--line);padding:18px;border-radius:18px}.spec b{display:block;margin-bottom:6px}.spec span{font-size:13px;color:var(--muted)}
+    .innovation{display:grid;grid-template-columns:1fr 1fr;gap:30px}.panel{padding:34px;border-radius:30px;background:white;border:1px solid var(--line)}.panel h3{font-size:26px;margin-top:0}.checklist{display:grid;gap:12px}.check{padding:14px 16px;border-radius:15px;background:#f6fbff;color:#29485b}.check:before{content:"✓";color:var(--mint);font-weight:1000;margin-inline-end:9px}.challenge:before{content:"!";color:#d97706}.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.phase{padding:22px;background:white;border:1px solid var(--line);border-radius:22px}.phase em{font-style:normal;font-size:12px;color:var(--blue);font-weight:900}.phase h4{margin:8px 0}.phase p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+    .cta{background:linear-gradient(135deg,#e9f7ff,#e9fff7);border:1px solid #d5edf3;border-radius:36px;padding:54px;text-align:center}.cta h2{font-size:42px;margin:0 0 12px}.form{display:flex;gap:10px;max-width:680px;margin:25px auto 0}.form input{flex:1;padding:16px 18px;border:1px solid #cfe0e9;border-radius:14px;background:#fff;font:inherit;outline:none}.form input:focus{border-color:#76bfff;box-shadow:0 0 0 4px rgba(37,99,235,.08)}
+    .card,.step,.phase,.panel,.spec,.layer{will-change:transform,box-shadow;position:relative;overflow:hidden}
+    .card:after,.step:after,.phase:after,.panel:after,.spec:after{content:"";position:absolute;inset:auto -35% -70% auto;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(32,201,151,.18),transparent 68%);opacity:0;transition:.35s;pointer-events:none}
+    .card:hover,.step:hover,.phase:hover,.panel:hover,.spec:hover{transform:translateY(-9px);box-shadow:0 28px 72px rgba(22,72,110,.16);border-color:#b9dcea}
+    .card:hover:after,.step:hover:after,.phase:hover:after,.panel:hover:after,.spec:hover:after{opacity:1;transform:scale(1.15)}
+    .ask-section{padding-top:70px}.ask-shell{background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(239,249,255,.94));border:1px solid #d6e8f1;border-radius:34px;box-shadow:0 30px 90px rgba(17,67,103,.14);overflow:hidden}.ask-top{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid #dceaf1;background:rgba(255,255,255,.78)}.ask-top b{display:block;font-size:17px}.ask-top small{display:block;color:var(--muted);margin-top:3px}.ask-orb{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--mint));display:grid;place-items:center;color:#fff;font-weight:1000;font-size:20px;box-shadow:0 12px 28px rgba(37,99,235,.22)}.online{margin-inline-start:auto;display:inline-flex;align-items:center;gap:7px;color:#0f766e;background:#e9fbf4;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:900}.online i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 5px rgba(32,201,151,.12)}.ask-grid{display:grid;grid-template-columns:.9fr 1.1fr;min-height:450px}.question-list{padding:22px;display:grid;gap:10px;border-inline-end:1px solid #dceaf1;background:rgba(246,251,255,.72)}.qbtn{width:100%;text-align:start;border:1px solid #dce8ef;background:#fff;padding:15px 17px;border-radius:16px;font:inherit;font-weight:850;color:#29485b;cursor:pointer;transition:.22s}.qbtn:hover{transform:translateY(-3px);border-color:#86c9e8;box-shadow:0 10px 24px rgba(31,86,120,.10)}.qbtn.active{background:linear-gradient(135deg,#e9f3ff,#e8fff7);border-color:#8bcce0;color:#0c5f78}.answer-card{padding:40px;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 85% 15%,rgba(32,201,151,.13),transparent 28%),white}.answer-tag{display:inline-flex;align-self:flex-start;padding:7px 11px;background:#eafbf5;color:#0f766e;border-radius:999px;font-size:12px;font-weight:900}.answer-card h3{font-size:30px;margin:18px 0 10px}.answer-card p{font-size:17px;line-height:1.95;color:#496779;margin:0}.answer-note{margin-top:24px;padding:14px 16px;border-radius:16px;background:#fff9ea;border:1px solid #f5e5b8;color:#7a5b17;font-size:12px;line-height:1.7}.floating-ask{position:fixed;z-index:60;bottom:24px;right:24px;border:0;border-radius:18px;padding:14px 18px;background:linear-gradient(135deg,var(--blue),var(--mint));color:#fff;font-weight:900;box-shadow:0 18px 50px rgba(37,99,235,.32);cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:9px;transition:.25s}.floating-ask:hover{transform:translateY(-4px) scale(1.02)}
+    footer{padding:42px 0 25px}.foot{display:flex;justify-content:space-between;gap:30px;align-items:flex-start;border-top:1px solid var(--line);padding-top:30px}.small{color:var(--muted);font-size:12px;line-height:1.8;max-width:720px}.social{display:flex;gap:10px}.social a{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;text-decoration:none;color:var(--ink);background:white}
+    .en{display:none!important}body.en-mode{direction:ltr}body.en-mode .ar{display:none!important}body.en-mode .en{display:revert!important}body.en-mode .step:before{right:auto;left:22px}
+    /* V4: content is visible by default so iOS/Quick Look never shows a blank page */
+    .reveal{opacity:1;transform:none;transition:.7s ease}
+    .reveal.show{opacity:1;transform:none}
+    @keyframes saleemFadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    .hero .reveal{animation:saleemFadeUp .7s ease both}
+    .hero .visual.reveal{animation-delay:.10s}
+
+    /* V3 - Hover readability: every focused card rises above its neighbours */
+    .grid3,.steps,.roadmap,.spec-list,.innovation,.exploded,.question-list,.stats{isolation:isolate}
+    .grid3{gap:28px}.steps{gap:32px}.roadmap{gap:20px}.spec-list{gap:18px}
+    .card,.step,.phase,.panel,.spec,.stat,.check,.qbtn,.layer,.floatcard,.patch,.phone{
+      transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s ease,border-color .25s ease,filter .25s ease;
+      transform-origin:center;
+    }
+    .card:hover,.step:hover,.phase:hover,.panel:hover,.spec:hover{
+      transform:translateY(-16px) scale(1.025);
+      z-index:35;
+      box-shadow:0 34px 85px rgba(15,62,98,.22);
+      border-color:#8dcde5;
+    }
+    .stat,.check{position:relative}
+    .stat:hover,.check:hover{
+      transform:translateY(-10px) scale(1.02);
+      z-index:35;
+      box-shadow:0 22px 55px rgba(10,55,85,.18);
+    }
+    .floatcard:hover{
+      transform:translateY(-10px) scale(1.04);
+      z-index:20;
+      box-shadow:0 30px 70px rgba(22,72,110,.22);
+    }
+    .patch:hover{transform:rotate(-12deg) translateY(-14px) scale(1.035);z-index:12;box-shadow:0 44px 90px rgba(30,80,120,.30),inset -12px -12px 26px rgba(120,170,200,.11),inset 8px 8px 20px #fff}
+    .phone:hover{transform:rotate(5deg) translateY(-12px) scale(1.02);z-index:11;box-shadow:0 48px 95px rgba(8,24,39,.34)}
+
+    /* Exploded patch layers: hovered layer always becomes the top layer */
+    .exploded{overflow:visible;padding-top:10px}
+    .layer{cursor:pointer;overflow:visible!important;padding:0 22px;text-align:center;line-height:1.5}
+    .layer:hover{
+      z-index:90!important;
+      transform:translateX(-50%) translateY(-28px) scale(1.09)!important;
+      box-shadow:0 32px 70px rgba(19,78,110,.25),0 0 0 5px rgba(37,99,235,.07);
+      border-color:#71bfdf;
+      filter:saturate(1.08);
+    }
+    .layer:active,.layer:focus{z-index:90!important;transform:translateX(-50%) translateY(-22px) scale(1.07)!important;outline:none;box-shadow:0 32px 70px rgba(19,78,110,.25),0 0 0 5px rgba(37,99,235,.09)}
+
+    /* Questions get breathing room and lift above adjacent questions */
+    .question-list{gap:15px;padding:28px;overflow:visible}
+    .qbtn{position:relative;z-index:1;min-height:54px}
+    .qbtn:hover,.qbtn:focus-visible{
+      transform:translateY(-8px) scale(1.018);
+      z-index:45;
+      border-color:#67bddf;
+      box-shadow:0 20px 44px rgba(31,86,120,.18);
+      outline:none;
+    }
+    .qbtn.active{z-index:5;box-shadow:0 10px 28px rgba(32,201,151,.10)}
+
+    @media (max-width:640px){
+      .grid3,.steps,.roadmap,.spec-list{gap:22px}
+      .question-list{gap:12px;padding:20px}
+      .card:active,.step:active,.phase:active,.panel:active,.spec:active{transform:translateY(-8px) scale(1.015);z-index:35}
+      .layer:hover{transform:translateX(-50%) translateY(-18px) scale(1.06)!important}
+    }
+
+    @media(max-width:980px){.links{display:none}.hero-grid,.spec-wrap,.innovation{grid-template-columns:1fr}.hero{padding-top:45px}.visual{min-height:500px;max-width:620px;margin:auto}.grid3,.steps{grid-template-columns:1fr 1fr}.stats,.roadmap{grid-template-columns:1fr 1fr}.spec-wrap{gap:10px}.exploded{order:2}}
+    @media(max-width:640px){
+      section{padding:58px 0}
+      .hero{padding-top:28px;padding-bottom:48px}
+      .hero-grid{gap:18px}
+      .navin{min-height:66px;gap:10px}
+      .brand{gap:9px;min-width:0}
+      .brand span{font-size:15px;white-space:nowrap}
+      .logo{width:40px;height:40px;border-radius:13px;flex:0 0 auto}
+      .actions{gap:7px}.actions .primary{display:none}.lang{padding:9px 11px}
+      h1{font-size:36px;line-height:1.12;letter-spacing:-1.2px;margin:15px 0}
+      .lead{font-size:16px;line-height:1.75}
+      .hero-cta{margin-top:22px;gap:10px}.hero-cta .btn{flex:1 1 150px;padding:13px 14px}
+      .trust{margin-top:22px;gap:11px 16px;font-size:12px}
+      .visual{min-height:390px;width:100%;max-width:390px}
+      .phone{width:168px;height:338px;left:4px;top:8px;border-radius:32px;padding:8px}
+      .screen{border-radius:26px;padding:18px 12px}.metric{padding:12px;margin-top:12px}.metric b{font-size:25px}.mini-chart{height:55px}.alertcard{padding:10px;font-size:10px}
+      .patch{width:190px;height:112px;right:-10px;top:102px}.patch:before{font-size:24px}.patch:after{right:25px;top:23px}
+      .orb{width:275px;height:275px;left:9%;top:38px}
+      .floatcard{font-size:10px;padding:9px 10px;max-width:175px}.fc1{right:0;bottom:58px}.fc2{left:0;bottom:5px}
+      .grid3,.steps,.stats,.roadmap,.spec-list{grid-template-columns:1fr}
+      .cta{padding:34px 20px}.cta h2{font-size:32px}.form{flex-direction:column}.foot{flex-direction:column}
+      .exploded{height:430px}.layer{width:260px}.l2{width:245px}.l3{width:230px}.l4{width:215px}.l5{width:200px}
+      .section-head{margin-bottom:34px}.section-head h2{font-size:32px}.section-head p{font-size:15px}
+    }
+    @media(max-width:420px){
+      .container{width:min(94%,1180px)}
+      .brand span{font-size:14px}.logo{width:38px;height:38px}.lang{font-size:12px}
+      h1{font-size:33px}.eyebrow{font-size:11px}.visual{min-height:370px}
+      .phone{width:158px;height:320px}.patch{width:180px;height:106px;right:-12px}.orb{width:255px;height:255px}
+      .floating-ask{max-width:calc(100vw - 28px);white-space:nowrap}
+    }
+
+    @media(max-width:760px){.ask-grid{grid-template-columns:1fr}.question-list{border-inline-end:0;border-bottom:1px solid #dceaf1}.answer-card{padding:28px 22px;min-height:330px}.answer-card h3{font-size:25px}.floating-ask{right:14px;bottom:14px;padding:12px 14px;font-size:13px}}
+
+    /* V5 — explicit device mode chooser + polished mobile layout */
+    .device-chooser{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(4,18,31,.58);backdrop-filter:blur(18px)}
+    .device-chooser.open{display:flex}
+    .device-box{position:relative;width:min(620px,94vw);background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.75);border-radius:32px;box-shadow:0 40px 120px rgba(3,20,35,.28);padding:28px;text-align:center}
+    .chooser-lang{position:absolute;inset-inline-end:18px;top:18px;border:1px solid #ccecff;background:#eaf6ff;color:#155e75;border-radius:13px;padding:9px 12px;font:inherit;font-size:12px;font-weight:1000;cursor:pointer;min-width:46px;z-index:2}.chooser-lang:hover{background:#dff2ff;border-color:#8fd0e8}
+    .device-mark{width:62px;height:62px;margin:0 auto 14px;border-radius:20px;background:linear-gradient(135deg,var(--blue),var(--mint));color:#fff;display:grid;place-items:center;font-size:29px;font-weight:1000;box-shadow:0 16px 36px rgba(37,99,235,.23)}
+    .device-box h2{font-size:30px;margin:8px 0}.device-box p{color:var(--muted);line-height:1.75;margin:0 auto 20px;max-width:500px}
+    .device-options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.device-option{border:1px solid #d7e6ef;background:#fff;border-radius:22px;padding:20px 14px;cursor:pointer;font:inherit;color:var(--ink);transition:.25s;box-shadow:0 10px 28px rgba(31,86,120,.07)}
+    .device-option:hover{transform:translateY(-5px);border-color:#76c3df;box-shadow:0 22px 48px rgba(31,86,120,.15)}
+    .device-option .device-icon{display:block;font-size:38px;margin-bottom:9px}.device-option b{display:block;font-size:18px}.device-option small{display:block;color:var(--muted);margin-top:6px;line-height:1.5}
+    .mode-switch{border:1px solid #d7e7f0;background:#fff;color:#31566b;border-radius:13px;padding:9px 11px;font-weight:900;cursor:pointer;font-size:12px}
+    .mode-switch:hover{border-color:#8ac9df;background:#f4fbff}
+    .floating-ask.ask-hidden{opacity:0;pointer-events:none;transform:translateY(18px)}
+
+    /* Mobile mode is intentionally independent from hover/desktop overlap. */
+    body.mobile-mode .container{width:min(94%,560px)}
+    body.mobile-mode section{padding:54px 0}
+    body.mobile-mode .links{display:none}
+    body.mobile-mode .hero{padding-top:26px;padding-bottom:44px}
+    body.mobile-mode .hero-grid,body.mobile-mode .spec-wrap,body.mobile-mode .innovation{grid-template-columns:1fr;gap:20px}
+    body.mobile-mode .grid3,body.mobile-mode .steps,body.mobile-mode .stats,body.mobile-mode .roadmap,body.mobile-mode .spec-list{grid-template-columns:1fr}
+    body.mobile-mode .navin{min-height:66px;gap:8px}body.mobile-mode .brand span{font-size:14px;white-space:nowrap}body.mobile-mode .logo{width:39px;height:39px}
+    body.mobile-mode .actions .primary{display:none}body.mobile-mode .actions{gap:6px}body.mobile-mode .lang{padding:9px 10px}
+    body.mobile-mode h1{font-size:34px;line-height:1.12;letter-spacing:-1px;margin:14px 0}body.mobile-mode .lead{font-size:16px;line-height:1.75}
+    body.mobile-mode .hero-cta .btn{flex:1 1 145px;padding:13px 12px}
+    body.mobile-mode .visual{min-height:390px;width:100%;max-width:390px;margin:auto}
+    body.mobile-mode .phone{width:160px;height:322px;left:4px;top:9px;border-radius:31px;padding:8px}body.mobile-mode .screen{border-radius:25px;padding:17px 11px}
+    body.mobile-mode .patch{width:182px;height:108px;right:-6px;top:102px}body.mobile-mode .patch:before{font-size:23px}body.mobile-mode .orb{width:260px;height:260px;left:8%;top:40px}
+    body.mobile-mode .floatcard{font-size:10px;padding:9px 10px;max-width:170px}body.mobile-mode .fc1{right:0;bottom:55px}body.mobile-mode .fc2{left:0;bottom:4px}
+    body.mobile-mode .section-head h2{font-size:31px}body.mobile-mode .section-head p{font-size:15px}
+
+    /* Fix screenshot #1: technical layers never leave the phone viewport. */
+    body.mobile-mode .exploded{height:auto!important;order:2;display:grid;gap:12px;padding:6px 0;overflow:visible}
+    body.mobile-mode .layer,body.mobile-mode .l1,body.mobile-mode .l2,body.mobile-mode .l3,body.mobile-mode .l4,body.mobile-mode .l5{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:100%!important;height:auto!important;min-height:76px;border-radius:22px;padding:16px 18px;z-index:1!important}
+    body.mobile-mode .layer:before{content:attr(data-step);position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:11px;background:rgba(255,255,255,.72);display:grid;place-items:center;font-size:11px;color:#397087;font-weight:1000}
+    body.mobile-mode .layer:hover,body.mobile-mode .layer:active,body.mobile-mode .layer:focus{transform:translateY(-4px)!important;z-index:8!important;box-shadow:0 18px 42px rgba(19,78,110,.18);outline:none}
+
+    /* Fix screenshot #2: compact Q&A, no giant empty answer area. */
+    body.mobile-mode .ask-section{padding-top:50px}
+    body.mobile-mode .ask-shell{border-radius:25px}
+    body.mobile-mode .ask-top{padding:16px;gap:10px}body.mobile-mode .ask-orb{width:42px;height:42px;border-radius:14px}body.mobile-mode .ask-top small{font-size:11px}
+    body.mobile-mode .online{padding:6px 8px;font-size:10px}
+    body.mobile-mode .ask-grid{grid-template-columns:1fr;min-height:0}
+    body.mobile-mode .question-list{padding:14px;gap:9px;border-inline-end:0;border-bottom:1px solid #dceaf1}
+    body.mobile-mode .qbtn{min-height:0;padding:13px 14px;border-radius:14px;font-size:14px;line-height:1.55}
+    body.mobile-mode .answer-card{padding:20px 16px!important;min-height:0!important;justify-content:flex-start!important}
+    body.mobile-mode .answer-card h3{font-size:21px;margin:13px 0 8px}
+    body.mobile-mode .answer-card p{font-size:14px;line-height:1.8}
+    body.mobile-mode .answer-note{margin-top:14px;padding:12px 13px;font-size:11px}
+    body.mobile-mode .floating-ask{right:12px;bottom:12px;padding:11px 13px;font-size:12px;border-radius:15px}
+    body.mobile-mode footer{padding-bottom:82px}
+
+    /* On actual narrow screens apply the same safe mobile treatment even if the chooser did not run. */
+    @media(max-width:640px){
+      .device-box{padding:22px 17px;border-radius:26px}.device-box h2{font-size:25px;padding-inline:46px}.chooser-lang{inset-inline-end:12px;top:12px;padding:8px 10px}.device-options{grid-template-columns:1fr}.device-option{padding:15px}.device-option .device-icon{font-size:31px;margin-bottom:5px}
+      body:not(.desktop-mode) .exploded{height:auto!important;display:grid;gap:12px;padding:6px 0}
+      body:not(.desktop-mode) .layer,body:not(.desktop-mode) .l1,body:not(.desktop-mode) .l2,body:not(.desktop-mode) .l3,body:not(.desktop-mode) .l4,body:not(.desktop-mode) .l5{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:100%!important;height:auto!important;min-height:76px;border-radius:22px;padding:16px 18px}
+      body:not(.desktop-mode) .layer:hover,body:not(.desktop-mode) .layer:active,body:not(.desktop-mode) .layer:focus{transform:translateY(-4px)!important}
+      body:not(.desktop-mode) .ask-grid{min-height:0}
+      body:not(.desktop-mode) .answer-card{padding:20px 16px!important;min-height:0!important;justify-content:flex-start!important}
+      body:not(.desktop-mode) .answer-card h3{font-size:21px;margin:13px 0 8px}
+      body:not(.desktop-mode) .answer-card p{font-size:14px;line-height:1.8}
+      body:not(.desktop-mode) .answer-note{margin-top:14px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="device-chooser" id="deviceChooser" role="dialog" aria-modal="true" aria-labelledby="deviceTitle">
+    <div class="device-box">
+      <button class="chooser-lang" id="chooserLangBtn" type="button" aria-label="Switch language">EN</button>
+      <div class="device-mark">س</div>
+      <h2 id="deviceTitle"><span class="ar">كيف تريد عرض مشروع سليم؟</span><span class="en">Choose your display mode</span></h2>
+      <p><span class="ar">اختر نوع الجهاز حتى نضبط المسافات وحجم العناصر وطريقة عرض مكونات الجهاز تلقائياً.</span><span class="en">Choose your device so spacing, element sizes, and the technical view are optimized for your screen.</span></p>
+      <div class="device-options">
+        <button class="device-option" type="button" data-device="mobile"><span class="device-icon">📱</span><b><span class="ar">جوال</span><span class="en">Mobile</span></b><small><span class="ar">عرض عمودي واضح بدون تداخل</span><span class="en">Clean vertical layout with no overlap</span></small></button>
+        <button class="device-option" type="button" data-device="desktop"><span class="device-icon">🖥️</span><b><span class="ar">كمبيوتر</span><span class="en">Desktop</span></b><small><span class="ar">التصميم الكامل والطبقات التفاعلية</span><span class="en">Full layout with interactive layered view</span></small></button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="container navin">
+      <div class="brand"><div class="logo">س</div><span class="ar">سليم | Saleem Patch</span><span class="en">Saleem Patch | سليم</span></div>
+      <div class="links">
+        <a href="#features"><span class="ar">المميزات</span><span class="en">Features</span></a>
+        <a href="#how"><span class="ar">كيف يعمل</span><span class="en">How it works</span></a>
+        <a href="#specs"><span class="ar">المكونات</span><span class="en">Technology</span></a>
+        <a href="#innovation"><span class="ar">الابتكار</span><span class="en">Innovation</span></a>
+      </div>
+      <div class="actions"><button class="mode-switch" id="modeSwitch" type="button"><span class="ar">العرض</span><span class="en">View</span></button><button class="btn lang" id="langBtn">EN</button><a class="btn primary" href="#ask-saleem"><span class="ar">اسأل عن سليم</span><span class="en">Ask Saleem</span></a></div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="dot"></span><span class="ar">مفهوم ابتكاري لإدارة السكري من النوع الأول</span><span class="en">A new concept for Type 1 Diabetes management</span></div>
+          <h1><span class="ar">سليم: مستقبل إدارة السكري <span class="grad">الذكي</span> بين يديك</span><span class="en">Saleem: The Future of <span class="grad">Smart Diabetes Management</span></span></h1>
+          <p class="lead ar">منظومة لاصقة متكاملة تجمع القياس المستمر للسكر والكيتونات مع مضخة إنسولين دقيقة، وتربط المريض وولي الأمر بتطبيق واحد للتتبع والتنبيهات المبكرة.</p>
+          <p class="lead en">An integrated wearable concept combining continuous glucose and ketone sensing with precise insulin delivery, connected to one app for real-time tracking and early safety alerts.</p>
+          <div class="hero-cta"><a class="btn primary" href="#how"><span class="ar">اكتشف كيف يعمل</span><span class="en">Explore Features</span></a><a class="btn secondary" href="#ask-saleem"><span class="ar">اسأل عن المشروع</span><span class="en">Ask about Saleem</span></a></div>
+          <div class="trust"><span class="ar">متابعة لحظية</span><span class="ar">تنبيهات لولي الأمر</span><span class="ar">تصميم قابل للارتداء</span><span class="en">Live Tracking</span><span class="en">Caregiver Alerts</span><span class="en">Wearable Design</span></div>
+        </div>
+        <div class="visual reveal">
+          <div class="orb"></div><div class="patch"></div>
+          <div class="phone"><div class="screen"><div class="notch"></div><div class="apphead"><span class="ar">ملخص سليم</span><span class="en">Saleem Summary</span><span>●</span></div><div class="metric"><small><span class="ar">سكر الدم</span><span class="en">Glucose</span></small><b class="good">112 <small>mg/dL</small></b><div class="mini-chart"></div></div><div class="metric"><small><span class="ar">الكيتونات</span><span class="en">Ketones</span></small><b>0.4 <small>mmol/L</small></b></div><div class="alertcard"><b><span class="ar">تنبيه وقائي</span><span class="en">Preventive Alert</span></b><br><span class="ar">الاتجاه مستقر ولا توجد مؤشرات خطر حالياً.</span><span class="en">Trend is stable. No high-risk pattern detected.</span></div></div></div>
+          <div class="floatcard fc1"><strong>24/7</strong> <span class="ar">مراقبة مستمرة</span><span class="en">Continuous monitoring</span></div>
+          <div class="floatcard fc2"><strong>App</strong> <span class="ar">تنبيهات فورية</span><span class="en">Instant alerts</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem">
+      <div class="container reveal">
+        <div class="section-head"><div class="eyebrow">01</div><h2><span class="ar">المشكلة التي يحاول سليم حلها</span><span class="en">The problem Saleem aims to solve</span></h2><p class="ar">إدارة السكري من النوع الأول تتطلب متابعة متكررة واتخاذ قرارات سريعة. الفكرة تقترح جمع المراقبة والتنبيه وضخ الإنسولين في منظومة واحدة لتقليل التشتت بين أجهزة متعددة.</p><p class="en">Type 1 Diabetes requires frequent monitoring and rapid decisions. Saleem proposes one integrated system for sensing, alerts, and insulin delivery to reduce fragmentation across multiple devices.</p></div>
+        <div class="stats"><div class="stat"><b>1</b><span class="ar">لاصقة موحدة بدل عدة أجهزة</span><span class="en">Integrated wearable system</span></div><div class="stat"><b>2×</b><span class="ar">قياس مستمر: سكر + كيتونات</span><span class="en">Dual sensing: glucose + ketones</span></div><div class="stat"><b>24/7</b><span class="ar">متابعة وتنبيهات مستمرة</span><span class="en">Continuous tracking & alerts</span></div><div class="stat"><b>1 App</b><span class="ar">ملخص موحد للمريض والوالدين</span><span class="en">One summary for patient & caregivers</span></div></div>
+        <div class="note ar">* الأرقام أعلاه تصف مفهوم المنتج وليست نتائج سريرية مثبتة.</div><div class="note en">* Figures above describe the product concept and are not clinical performance claims.</div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container"><div class="section-head reveal"><div class="eyebrow">02</div><h2><span class="ar">ثلاثة محاور أساسية للمنظومة</span><span class="en">Three core pillars</span></h2><p><span class="ar">تركيز على الدمج، الأمان، وسهولة المتابعة.</span><span class="en">Designed around integration, safety, and clarity.</span></p></div>
+        <div class="grid3"><article class="card reveal"><div class="icon">◉</div><h3><span class="ar">مستشعر مزدوج مستمر</span><span class="en">Dual Continuous Sensing</span></h3><p class="ar">تصور لمراقبة السكر والكيتونات بشكل مستمر، بهدف توفير صورة أشمل عن الحالة الأيضية وتقليل الاعتماد على القياسات المنفصلة.</p><p class="en">A concept for continuous glucose and ketone monitoring to provide a more complete metabolic picture.</p></article><article class="card reveal"><div class="icon">⇄</div><h3><span class="ar">ضخ أنسولين آلي</span><span class="en">Automated Insulin Delivery</span></h3><p class="ar">مضخة دقيقة ضمن حلقة مغلقة تستخدم قراءات المستشعر وخوارزمية تحكم لحساب جرعات مقترحة ضمن ضوابط أمان صارمة.</p><p class="en">A closed-loop micro-pump concept using sensor data and safety-controlled dosing logic.</p></article><article class="card reveal"><div class="icon">⚑</div><h3><span class="ar">شبكة أمان للوالدين</span><span class="en">Parental Safety Net</span></h3><p class="ar">تنبيهات عالية الأولوية عبر الهاتف والسحابة عند اكتشاف أنماط قد تشير إلى هبوط شديد أو ارتفاع خطير في الكيتونات.</p><p class="en">High-priority phone and cloud alerts for patterns suggesting severe hypoglycemia or dangerous ketone elevation.</p></article></div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="container"><div class="section-head reveal"><div class="eyebrow">03</div><h2><span class="ar">كيف يعمل سليم؟</span><span class="en">How Saleem works</span></h2></div><div class="steps"><div class="step reveal"><h3><span class="ar">ثبّت اللاصقة</span><span class="en">Apply the patch</span></h3><p class="ar">تثبت اللاصقة الخفيفة والمقاومة للماء على الذراع أو البطن حسب التوجيه الطبي وتصميم النموذج النهائي.</p><p class="en">Apply the lightweight, water-resistant patch to the arm or abdomen according to final clinical guidance.</p></div><div class="step reveal"><h3><span class="ar">قراءة وتحليل مستمر</span><span class="en">Sense and analyze</span></h3><p class="ar">تقرأ المنظومة مستوى السكر والكيتونات وتستخدم خوارزمية تحكم لحساب الاحتياج ضمن حدود أمان محددة.</p><p class="en">The system reads glucose/ketone trends and calculates insulin requirements within predefined safety limits.</p></div><div class="step reveal"><h3><span class="ar">ملخص سليم</span><span class="en">Saleem Summary</span></h3><p class="ar">يعرض التطبيق الاتجاهات والملخص اليومي وإعدادات الطوارئ، مع مشاركة التنبيهات مع ولي الأمر أو مقدم الرعاية.</p><p class="en">The app shows trends, daily summaries, emergency settings, and caregiver alerts.</p></div></div></div>
+    </section>
+
+    <section id="specs">
+      <div class="container spec-wrap"><div class="exploded reveal"><div class="layer l1" tabindex="0" data-step="01"><span class="ar">الغلاف الطبي</span><span class="en">Medical Shell</span></div><div class="layer l2" tabindex="0" data-step="02"><span class="ar">خزان الإنسولين + مضخة دقيقة</span><span class="en">Reservoir + Micro-pump</span></div><div class="layer l3" tabindex="0" data-step="03"><span class="ar">مصفوفة مستشعر مزدوج</span><span class="en">Dual Sensor Array</span></div><div class="layer l4" tabindex="0" data-step="04"><span class="ar">Bluetooth 5.3 + معالجة</span><span class="en">Bluetooth 5.3 + Control</span></div><div class="layer l5" tabindex="0" data-step="05"><span class="ar">قنية دقيقة مرنة + بطارية</span><span class="en">Flexible Cannula + Battery</span></div></div><div class="reveal"><div class="eyebrow">04</div><h2 style="font-size:44px;margin:15px 0"><span class="ar">تفصيل تقني واضح</span><span class="en">Technical breakdown</span></h2><p class="lead" style="font-size:16px"><span class="ar">المواصفات التالية تمثل تصوراً هندسياً أولياً يحتاج إلى اختبار وتحقق سريري وتنظيمي قبل أي استخدام طبي.</span><span class="en">The following specs represent an early engineering concept requiring clinical and regulatory validation before medical use.</span></p><div class="spec-list"><div class="spec"><b><span class="ar">مضخة دقيقة</span><span class="en">Micro-pump</span></b><span><span class="ar">تحكم دقيق بالجرعات الصغيرة.</span><span class="en">Precise micro-dosing control.</span></span></div><div class="spec"><b><span class="ar">خزان إنسولين</span><span class="en">Insulin Reservoir</span></b><span><span class="ar">تصميم مدمج داخل الـ Pod.</span><span class="en">Integrated inside the pod.</span></span></div><div class="spec"><b><span class="ar">قنية مرنة</span><span class="en">Flexible Cannula</span></b><span><span class="ar">واجهة إيصال مصغرة.</span><span class="en">Compact delivery interface.</span></span></div><div class="spec"><b><span class="ar">مستشعر مزدوج</span><span class="en">Dual Sensor Array</span></b><span><span class="ar">سكر + كيتونات.</span><span class="en">Glucose + ketones.</span></span></div><div class="spec"><b>Bluetooth 5.3</b><span><span class="ar">اتصال منخفض الطاقة.</span><span class="en">Low-energy connectivity.</span></span></div><div class="spec"><b><span class="ar">بطارية حتى 14 يوماً*</span><span class="en">Up to 14-day battery*</span></b><span><span class="ar">هدف تصميمي مبدئي.</span><span class="en">Preliminary design target.</span></span></div></div></div></div>
+    </section>
+
+    <section id="innovation">
+      <div class="container"><div class="section-head reveal"><div class="eyebrow">05</div><h2><span class="ar">لماذا الفكرة مميزة لمسابقة إبداع؟</span><span class="en">Why this concept stands out</span></h2><p class="ar">القوة ليست في إضافة حساس جديد فقط، بل في دمج عدة وظائف صحية ضمن تجربة واحدة مع طبقة أمان للوالدين وتحليل تنبؤي.</p><p class="en">The value is not just another sensor — it is the integration of sensing, delivery, caregiver safety, and predictive analytics into one experience.</p></div><div class="innovation"><div class="panel reveal"><h3><span class="ar">نقاط الابتكار</span><span class="en">Innovation points</span></h3><div class="checklist"><div class="check"><span class="ar">دمج متابعة السكر والكيتونات في نظام واحد.</span><span class="en">Combines glucose and ketone monitoring.</span></div><div class="check"><span class="ar">ربط القياس بضخ الإنسولين داخل حلقة مغلقة.</span><span class="en">Links sensing with closed-loop insulin delivery.</span></div><div class="check"><span class="ar">تنبيهات موجهة للمريض وولي الأمر.</span><span class="en">Alerts both patient and caregiver.</span></div><div class="check"><span class="ar">واجهة واحدة للتاريخ والاتجاهات والطوارئ.</span><span class="en">One interface for history, trends, and emergency settings.</span></div></div></div><div class="panel reveal"><h3><span class="ar">التحديات وكيف تُدرس</span><span class="en">Challenges to validate</span></h3><div class="checklist"><div class="check challenge"><span class="ar">دقة قياس الكيتونات المستمرة وتداخل الإشارات.</span><span class="en">Continuous ketone accuracy and sensor interference.</span></div><div class="check challenge"><span class="ar">سلامة الجرعات الآلية في الحالات المتغيرة بسرعة.</span><span class="en">Automated dosing safety during rapid changes.</span></div><div class="check challenge"><span class="ar">عمر المستشعر والبطارية وحجم الخزان.</span><span class="en">Sensor lifetime, battery capacity, and reservoir size.</span></div><div class="check challenge"><span class="ar">متطلبات الاعتماد الطبي والأمن السيبراني والخصوصية.</span><span class="en">Medical regulation, cybersecurity, and privacy requirements.</span></div></div></div></div></div>
+    </section>
+
+    <section>
+      <div class="container"><div class="section-head reveal"><div class="eyebrow">06</div><h2><span class="ar">خطة تطوير نموذج أولي واقعية</span><span class="en">Practical prototype roadmap</span></h2></div><div class="roadmap"><div class="phase reveal"><em>PHASE 01</em><h4><span class="ar">محاكاة رقمية</span><span class="en">Digital Simulation</span></h4><p class="ar">تجربة الخوارزمية على بيانات مصطنعة بدون أي ضخ حقيقي.</p><p class="en">Test control logic on simulated data with no real dosing.</p></div><div class="phase reveal"><em>PHASE 02</em><h4><span class="ar">نموذج إلكتروني</span><span class="en">Bench Prototype</span></h4><p class="ar">ربط حساسات بحثية ومضخة اختبارية داخل بيئة مخبرية.</p><p class="en">Connect research sensors and a test pump in a bench environment.</p></div><div class="phase reveal"><em>PHASE 03</em><h4><span class="ar">اختبارات أمان</span><span class="en">Safety Validation</span></h4><p class="ar">فشل آمن، انقطاع اتصال، حدود جرعات، وإنذارات.</p><p class="en">Fail-safe logic, connectivity loss, dosing limits, and alerts.</p></div><div class="phase reveal"><em>PHASE 04</em><h4><span class="ar">شراكة طبية</span><span class="en">Clinical Partnership</span></h4><p class="ar">تطوير واختبار سريري وتنظيمي مع مختصين وجهات معتمدة.</p><p class="en">Clinical and regulatory development with accredited partners.</p></div></div></div>
+    </section>
+
+    <section id="ask-saleem" class="ask-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow"><span class="dot"></span><span class="ar">مساعد المشروع التفاعلي</span><span class="en">Interactive Project Guide</span></div>
+          <h2><span class="ar">اسأل عن سليم</span><span class="en">Ask about Saleem</span></h2>
+          <p class="ar">اختر سؤالاً جاهزاً لعرض إجابة مختصرة وواضحة أمام لجنة التحكيم. لا يحتاج إنترنت ولا ذكاء اصطناعي خارجي.</p>
+          <p class="en">Choose a prepared question to instantly show a clear, concise answer for judges. No internet or external AI is required.</p>
+        </div>
+        <div class="ask-shell reveal">
+          <div class="ask-top">
+            <div class="ask-orb">س</div>
+            <div>
+              <b><span class="ar">مساعد سليم</span><span class="en">Saleem Guide</span></b>
+              <small><span class="ar">إجابات جاهزة عن الفكرة والابتكار والأمان</span><span class="en">Prepared answers about the concept, innovation, and safety</span></small>
+            </div>
+            <span class="online"><i></i><span class="ar">جاهز</span><span class="en">Ready</span></span>
+          </div>
+          <div class="ask-grid">
+            <div class="question-list" id="questionList">
+              <button class="qbtn active" data-q="0"><span class="ar">ما هي فكرة سليم باختصار؟</span><span class="en">What is Saleem in one sentence?</span></button>
+              <button class="qbtn" data-q="1"><span class="ar">ما المشكلة التي يحلها؟</span><span class="en">What problem does it solve?</span></button>
+              <button class="qbtn" data-q="2"><span class="ar">ما الجديد مقارنة بالأجهزة الحالية؟</span><span class="en">What is new versus current devices?</span></button>
+              <button class="qbtn" data-q="3"><span class="ar">كيف يعمل النظام المغلق؟</span><span class="en">How does the closed-loop system work?</span></button>
+              <button class="qbtn" data-q="4"><span class="ar">كيف يحمي المريض من الحماض الكيتوني DKA؟</span><span class="en">How could it help with DKA risk?</span></button>
+              <button class="qbtn" data-q="5"><span class="ar">ما أهم تحديات المشروع؟</span><span class="en">What are the main challenges?</span></button>
+              <button class="qbtn" data-q="6"><span class="ar">هل الجهاز جاهز للاستخدام الطبي؟</span><span class="en">Is the device ready for medical use?</span></button>
+              <button class="qbtn" data-q="7"><span class="ar">كيف سيتم تطوير النموذج الأولي؟</span><span class="en">How will the prototype be developed?</span></button>
+            </div>
+            <div class="answer-card" aria-live="polite">
+              <div class="answer-tag"><span class="ar">إجابة سليم</span><span class="en">Saleem Answer</span></div>
+              <h3 id="answerTitle">ما هي فكرة سليم باختصار؟</h3>
+              <p id="answerText">سليم هو مفهوم لجهاز لاصق واحد يجمع المراقبة المستمرة لسكر الدم والكيتونات مع ضخ الإنسولين آلياً، ويربط كل ذلك بتطبيق يرسل تنبيهات فورية للمريض وولي الأمر.</p>
+              <div class="answer-note"><span class="ar">معلومة مهمة: سليم حالياً مفهوم ابتكاري بحثي ويحتاج تحققاً هندسياً وسريرياً وتنظيمياً قبل الاستخدام الطبي.</span><span class="en">Important: Saleem is currently a research innovation concept and requires engineering, clinical, and regulatory validation before medical use.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container foot"><div><div class="brand"><div class="logo">س</div><span>سليم | Saleem Patch</span></div><p class="small ar">تنبيه طبي: هذا الموقع يعرض مفهوماً ابتكارياً/بحثياً وليس جهازاً طبياً معتمداً أو بديلاً عن الطبيب. أي تطوير فعلي يتطلب تحققاً هندسياً وسريرياً وتنظيمياً شاملاً.</p><p class="small en">Medical disclaimer: This website presents a research/innovation concept, not an approved medical device or a substitute for professional medical care. Any real-world development requires engineering, clinical, and regulatory validation.</p></div><div class="social"><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">◎</a></div></div></footer>
+
+  <a class="floating-ask" href="#ask-saleem"><span>✦</span><span class="ar">اسأل عن سليم</span><span class="en">Ask Saleem</span></a>
+
+  <script>
+
+    const viewportMeta=document.getElementById('saleemViewport');
+    const deviceChooser=document.getElementById('deviceChooser');
+    const modeSwitch=document.getElementById('modeSwitch');
+    function openDeviceChooser(){deviceChooser.classList.add('open');}
+    function chooseDevice(mode){
+      document.body.classList.remove('mobile-mode','desktop-mode');
+      if(mode==='mobile'){
+        document.body.classList.add('mobile-mode');
+        viewportMeta.setAttribute('content','width=device-width, initial-scale=1, viewport-fit=cover');
+      }else{
+        document.body.classList.add('desktop-mode');
+        // On phones, desktop mode intentionally uses a wide design canvas. On computers this remains normal.
+        const narrow=window.matchMedia('(max-width: 700px)').matches;
+        viewportMeta.setAttribute('content',narrow?'width=1180, initial-scale=0.32, minimum-scale=0.25':'width=device-width, initial-scale=1');
+      }
+      deviceChooser.classList.remove('open');
+      try{sessionStorage.setItem('saleemDeviceMode',mode)}catch(e){}
+      window.scrollTo({top:0,behavior:'auto'});
+    }
+    document.querySelectorAll('[data-device]').forEach(b=>b.addEventListener('click',()=>chooseDevice(b.dataset.device)));
+    modeSwitch.addEventListener('click',openDeviceChooser);
+    // Ask once when the site is first opened in this browser session. The View button can reopen it anytime.
+    let savedDeviceMode='';
+    try{savedDeviceMode=sessionStorage.getItem('saleemDeviceMode')||''}catch(e){}
+    if(savedDeviceMode==='mobile'||savedDeviceMode==='desktop'){chooseDevice(savedDeviceMode)}else{setTimeout(openDeviceChooser,80)}
+    const btn=document.getElementById('langBtn');
+    const chooserLangBtn=document.getElementById('chooserLangBtn');
+    function setLanguage(lang){
+      const en=lang==='en';
+      document.body.classList.toggle('en-mode',en);
+      document.documentElement.lang=en?'en':'ar';
+      document.documentElement.dir=en?'ltr':'rtl';
+      if(btn){btn.textContent=en?'AR':'EN';btn.setAttribute('aria-label',en?'Switch to Arabic':'Switch to English');}
+      if(chooserLangBtn){chooserLangBtn.textContent=en?'AR':'EN';chooserLangBtn.setAttribute('aria-label',en?'Switch to Arabic':'Switch to English');}
+      try{localStorage.setItem('saleemLanguage',en?'en':'ar')}catch(e){}
+    }
+    function toggleLanguage(){
+      const next=document.body.classList.contains('en-mode')?'ar':'en';
+      setLanguage(next);
+      setTimeout(()=>{try{renderAnswer(activeQ)}catch(e){}},0);
+    }
+    let savedLanguage='ar';
+    try{savedLanguage=localStorage.getItem('saleemLanguage')||'ar'}catch(e){}
+    setLanguage(savedLanguage==='en'?'en':'ar');
+    if(btn)btn.addEventListener('click',toggleLanguage);
+    if(chooserLangBtn)chooserLangBtn.addEventListener('click',toggleLanguage);
+    if('IntersectionObserver' in window){const io=new IntersectionObserver((entries)=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));}
+
+    const qaData=[
+      {arT:'ما هي فكرة سليم باختصار؟',ar:'سليم هو مفهوم لجهاز لاصق واحد يجمع المراقبة المستمرة لسكر الدم والكيتونات مع ضخ الإنسولين آلياً، ويربط كل ذلك بتطبيق يرسل تنبيهات فورية للمريض وولي الأمر.',enT:'What is Saleem in one sentence?',en:'Saleem is a single wearable patch concept combining continuous glucose and ketone monitoring, automated insulin delivery, and real-time patient/caregiver alerts.'},
+      {arT:'ما المشكلة التي يحلها؟',ar:'مريض السكري من النوع الأول يعتمد اليوم على عدة أدوات وقراءات وقرارات متكررة. سليم يحاول توحيد القياس والضخ والتنبيه في منظومة واحدة لتقليل التأخر في اكتشاف الخطر وتبسيط المتابعة اليومية.',enT:'What problem does it solve?',en:'Type-1 diabetes management often requires multiple devices, measurements, and repeated decisions. Saleem aims to unify sensing, delivery, and alerts to simplify daily management and reduce delayed recognition of danger.'},
+      {arT:'ما الجديد مقارنة بالأجهزة الحالية؟',ar:'الابتكار المقترح هو جمع ثلاث وظائف في تجربة واحدة: قياس مستمر للسكر، متابعة مستمرة للكيتونات كمؤشر مبكر لخطر الحماض الكيتوني، وضخ إنسولين آلي مرتبط بخوارزمية أمان، إضافة إلى شبكة تنبيهات لولي الأمر.',enT:'What is new versus current devices?',en:'The proposed innovation combines continuous glucose sensing, continuous ketone monitoring as an early DKA-risk signal, automated insulin delivery with safety logic, and caregiver alerts in one integrated experience.'},
+      {arT:'كيف يعمل النظام المغلق؟',ar:'تقرأ المستشعرات البيانات بشكل مستمر، ثم تحلل الخوارزمية الاتجاهات ضمن حدود أمان محددة، وبعدها تقترح أو تنفذ جرعات دقيقة عبر المضخة بحسب التصميم الطبي النهائي. أي نسخة حقيقية تتطلب حدود جرعات وفشل آمن وتحقق سريري صارم.',enT:'How does the closed-loop system work?',en:'Sensors continuously provide data, the control algorithm evaluates trends within predefined safety limits, and the micro-pump can deliver precise doses according to the final clinical design. A real device would require strict dose limits, fail-safe behavior, and clinical validation.'},
+      {arT:'كيف يحمي المريض من الحماض الكيتوني DKA؟',ar:'الفكرة هي متابعة اتجاه الكيتونات مع السكر بدلاً من انتظار ظهور أعراض شديدة. عند ارتفاع الخطر يمكن للنظام إعطاء تنبيه عالي الأولوية للمريض وولي الأمر. هذا هدف بحثي يحتاج إثبات دقة المستشعر وقواعد التنبيه سريرياً.',enT:'How could it help with DKA risk?',en:'The concept monitors ketone trends together with glucose instead of waiting for severe symptoms. Rising risk could trigger high-priority alerts to the patient and caregiver. This remains a research goal requiring clinical validation of sensing accuracy and alert thresholds.'},
+      {arT:'ما أهم تحديات المشروع؟',ar:'أبرز التحديات هي دقة واستقرار قياس الكيتونات المستمر، سلامة الجرعات الآلية، حجم الخزان والبطارية، توافق المستشعرين، مقاومة الماء، الأمن السيبراني، الخصوصية، والاعتماد الطبي والتنظيمي.',enT:'What are the main challenges?',en:'Key challenges include reliable continuous ketone sensing, automated dosing safety, reservoir and battery constraints, dual-sensor compatibility, water resistance, cybersecurity, privacy, and medical/regulatory approval.'},
+      {arT:'هل الجهاز جاهز للاستخدام الطبي؟',ar:'لا. المشروع حالياً مفهوم ابتكاري ونموذج تصميمي للبحث والمسابقة. قبل الاستخدام على المرضى يلزم تطوير هندسي واختبارات مخبرية واختبارات أمان ودراسات سريرية وموافقات تنظيمية.',enT:'Is the device ready for medical use?',en:'No. It is currently an innovation and design concept for research and competition purposes. Patient use would require engineering development, bench testing, safety validation, clinical studies, and regulatory approval.'},
+      {arT:'كيف سيتم تطوير النموذج الأولي؟',ar:'تبدأ الخطة بمحاكاة رقمية للخوارزمية دون ضخ حقيقي، ثم نموذج مخبري بحساسات ومضخة اختبارية، ثم اختبارات الفشل الآمن والاتصال وحدود الجرعات، وبعد ذلك شراكة طبية لتطوير نسخة قابلة للتقييم السريري والتنظيمي.',enT:'How will the prototype be developed?',en:'The roadmap starts with digital simulation without real dosing, then a bench prototype using research sensors and a test pump, followed by fail-safe, connectivity, and dose-limit testing, and finally clinical partnership for regulated development.'}
+    ];
+    const aTitle=document.getElementById('answerTitle'),aText=document.getElementById('answerText');
+    function renderAnswer(i){const item=qaData[i];const en=document.body.classList.contains('en-mode');aTitle.textContent=en?item.enT:item.arT;aText.textContent=en?item.en:item.ar;document.querySelectorAll('.qbtn').forEach((b,n)=>b.classList.toggle('active',n===i));}
+    document.querySelectorAll('.qbtn').forEach((b,i)=>b.addEventListener('click',()=>renderAnswer(i)));
+    let activeQ=0;document.querySelectorAll('.qbtn').forEach((b,i)=>b.addEventListener('click',()=>activeQ=i));
+    renderAnswer(0);
+    const floatingAsk=document.querySelector('.floating-ask');
+    const askSection=document.getElementById('ask-saleem');
+    if('IntersectionObserver' in window && floatingAsk && askSection){
+      const askObserver=new IntersectionObserver(entries=>{entries.forEach(e=>floatingAsk.classList.toggle('ask-hidden',e.isIntersecting));},{threshold:.08});
+      askObserver.observe(askSection);
+    }
+  </script>
+</body>
+</html>
